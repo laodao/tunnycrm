@@ -1,0 +1,21 @@
+{
+  "author": "laodao <kingcq@gmail.com> (https://github.com/laodao)",
+  "name": "tunnycrm",
+  "description": "a simple crm base on tunny framework",
+  "version": "0.2.2",
+  "homepage": "https://github.com/laodao/tunnycrm",
+  "repository": {
+    "url": "git://github.com/laodao/tunnycrm.git"
+  },
+  "dependencies": {
+    "tunny": "0.2.2",
+    "log4js": "0.4.1",
+	"mysql": "2.0.0-alpha5"
+
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}

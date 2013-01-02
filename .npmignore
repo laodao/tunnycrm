@@ -1,0 +1,9 @@
+.git
+.idea
+node_modules
+docs
+examples
+npm-debug.log
+.gitignore
+.npmignore
+bin
