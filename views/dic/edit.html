@@ -1,0 +1,64 @@
+<ul class="breadcrumb">
+    <li><a href="#" onclick="loadUrl('/')">主页</a> <span class="divider">/</span></li>
+    <li><a href="#" onclick="loadUrl('/dicCategory/list')">字典管理</a> <span class="divider">/</span></li>
+    <li><a href="#" onclick="loadUrl('/dic/list/categoryId/<%= category.id %>')"><%= category.categoryName %></a> <span class="divider">/</span></li>
+    <li class="active">修改字典</li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="btn-toolbar">
+            <button class="btn btn-primary" onclick="updateDic()"><i class="icon-save"></i> 保存</button>
+            <div class="btn-group">
+            </div>
+        </div>
+        <div class="well">
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="home">
+                    <form id="tab" class="form-horizontal">
+                        <input type="hidden" name="categoryId" value="<%=: dic.categoryId %>" id="categoryId"/>
+                        <input type="hidden" name="id" value="<%=: dic.id %>" id="id"/>
+                        <div class="control-group">
+                            <label class='control-label' for="dicName">字典名：</label>
+                            <div class="controls">
+                                <input type="text" id="dicName" name="dicName" value="<%=: dic.dicName %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="code">编码：</label>
+                            <div class="controls">
+                                <input name="code" id="code" type="text" value="<%=: dic.code %>" class="input-xlarge"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label'>状态：</label>
+                            <div class="controls">
+                                <input type="radio" name="status" id="usable" value="usable" <% if(dic.status=='usable'){ %>checked<% } %> >可用&nbsp;
+                                <input type="radio" name="status" id="unusable" value="unusable"<% if(dic.status=='unusable'){ %>checked<% } %> >不可用
+                            </div>
+                        </div>
+                        <!--<div class="form-actions">
+                            <button class="btn btn-primary" type="button" onclick="saveUser()">保存更改</button>
+                            <button class="btn">取消</button>
+                        </div>-->
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function updateDic(){
+        var dicData = $('#tab').serialize();
+        $.ajax({url:'/dic', data:dicData, type:'PUT', success:function(data){
+                if(data.msg){
+                    alert(data.msg);
+                }
+                goback();
+            }
+        });
+    }
+</script>

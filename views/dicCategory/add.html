@@ -1,0 +1,68 @@
+    <ul class="breadcrumb">
+        <li><a href="#" onclick="loadUrl('/')">主页</a> <span class="divider">/</span></li>
+        <li><a href="#" onclick="loadUrl('/dicCategory/list')">字典管理</a> <span class="divider">/</span></li>
+        <% if(category){ %><li><a href="#" onclick="loadUrl('/dic/list/categoryId/<%= category.id %>')"><%= category.categoryName %></a> <span class="divider">/</span></li><% } %>
+        <li class="active">创建字典</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" onclick="saveCategory()"><i class="icon-save"></i> 保存</button>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" class="form-horizontal">
+                            <input type="hidden" name="parentId" value="<%=: categoryId %>" id="parentId"/>
+                            <div class="control-group">
+                                <label class='control-label' for="categoryName">分类名：</label>
+                                <div class="controls">
+                                    <input type="text" id="categoryName" name="categoryName" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="code">编码：</label>
+                                <div class="controls">
+                                    <input type="text" id="code" name="code" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="remark">备注：</label>
+                                <div class="controls">
+                                    <textarea name="remark" id="remark" type="text" value="" class="input-xlarge"></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label'>状态：</label>
+                                <div class="controls">
+                                    <input type="radio" name="status" id="usable" value="usable" checked>可用&nbsp;
+                                    <input type="radio" name="status" id="unusable" value="unusable">不可用
+                                </div>
+                            </div>
+                            <!--<div class="form-actions">
+                                <button class="btn btn-primary" type="button" onclick="saveUser()">保存更改</button>
+                                <button class="btn">取消</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+<script>
+    function saveCategory(){
+        var categoryData = $('#tab').serialize();
+        $.post('/dicCategory', categoryData, function(data){
+            if(data.msg){
+                alert(data.msg);
+            }
+            loadUrl('/dicCategory/list/categoryId/<%= categoryId %>');
+        }, 'json');
+    }
+</script>

@@ -1,0 +1,114 @@
+<script>
+    function addCategory(){
+        $('#rowContent').load('/dicCategory/add/categoryId/<%= parentId %>');
+    }
+    function addDic(){
+        $('#rowContent').load('/dic/add/categoryId/<%= parentId %>');
+    }
+    var currentId;
+</script>
+
+<ul class="breadcrumb">
+    <li><a href="/">首页</a> <span class="divider">/</span></li>
+    <li><a href="#" onclick="loadUrl('/dicCategory/list')">字典管理</a> <% if(parent && parent.id!=0){ %><span class="divider">/</span><% } %></li>
+    <% if(parent && parent.id!=0){ %><li><a href="#"><%= parent.categoryName %></a> <span class="divider">/</span></li><% } %>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="btn-toolbar">
+            <button class="btn btn-primary" onclick="addCategory()"><i class="icon-plus"></i> 添加分类</button>
+            <button class="btn btn-primary" onclick="addDic()"><i class="icon-plus"></i> 添加字典</button>
+            <!--<button class="btn">导入</button>-->
+            <!--<button class="btn">导出</button>-->
+            <div class="btn-group">
+            </div>
+        </div>
+        <div class="well">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>分类名</th>
+                    <th>备注</th>
+                    <th>状态</th>
+                    <th style="width: 26px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if( categoryList){
+                    for (var i=0;i<categoryList.length;i++) {
+                      category = categoryList[i];
+                %>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><%= category.categoryName %></td>
+                    <td><%= category.remark %></td>
+                    <td><%= category.status %></td>
+                    <td style="width: 60px;">
+                        <a href="#" onclick="editCategory('<%= category.id %>')"><i class="icon-pencil" title="编辑"></i></a>
+                        <a href="#myModal" onclick="currentId='<%= category.id %>'" role="button" data-toggle="modal"><i class="icon-remove" title="删除"></i></a>
+                        <!--<a href="#" <% if(category.hasChild==='0'){ %> onclick="loadUrl('/dicCategory/list/parentId/<%= category.id %>')" <% }else{ %> onclick="loadUrl('/dic/list/categoryId/<%= category.id %>')" <% } %> role="button"><i class="icon-arrow-right"></i></a>-->
+                        <a href="#" onclick="loadUrl('/dicCategory/list/parentId/<%= category.id %>')" role="button"><i class="icon-reorder" title="管理子分类"></i></a>
+                        <a href="#" onclick="loadUrl('/dic/list/categoryId/<%= category.id %>')" role="button"><i class="icon-arrow-right" title="管理字典"></i></a>
+                    </td>
+                </tr>
+                <% }
+                } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <ul>
+                <li><a href="#" onclick="loadUrl('/dicCategory/list')"><<</a></li>
+                <% if(totalPages<=5){ %>
+                <% for (var i=1;i<=totalPages;i++){ %>
+                <li><a href="#"><%= i %></a></li>
+                <% } %>
+                <% }else{ %>
+                <li><a href="#"><%= pageNo-2 %></a></li>
+                <li><a href="#"><%= pageNo-1 %></a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#"><%= totalPages-1 %></a></li>
+                <li><a href="#"><%= totalPages %></a></li>
+                <% } %>
+                <li><a href="#" onclick="loadUrl('/dicCategory/list/pageNo/<%= totalPages %>')"> >> </a></li>
+            </ul>
+        </div>
+
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">确认删除</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>您确定要删除吗?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="deleteCategory()">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteCategory(){
+        var id = currentId;
+        $.ajax({
+            url:'/dicCategory',
+            data:{'id':id},
+            //contentType:'application/x-www-form-urlencoded',
+            type:'DELETE',
+            success:function(data){
+                if(data.msg){
+                    alert(data.msg);
+                }
+                loadUrl('/dicCategory/list/categoryId/<%= parentId %>');
+            }
+        });
+    }
+    function editCategory(id){
+        loadUrl('/dicCategory/edit/'+id);
+    }
+</script>

@@ -1,0 +1,94 @@
+    <ul class="breadcrumb">
+        <li><a href="index.html">首页</a> <span class="divider">/</span></li>
+        <li><a href="users.html">用户管理</a> <span class="divider">/</span></li>
+        <li class="active">添加用户</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" onclick="saveAccount()"><i class="icon-save"></i> 保存</button>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <!--<ul class="nav nav-tabs">-->
+                    <!--<li class="active"><a href="#home" data-toggle="tab">Profile</a></li>-->
+                    <!--<li><a href="#profile" data-toggle="tab">Password</a></li>-->
+                <!--</ul>-->
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" class="form-horizontal">
+                            <div class="control-group">
+                                <label class='control-label' for="account">帐号：</label>
+                                <div class="controls">
+                                    <input type="text" id="account" name="account" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="name">姓名：</label>
+                                <div class="controls">
+                                    <input name="name" id="name" type="text" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="passwd">密码：</label>
+                                <div class="controls">
+                                    <input name="passwd" id="passwd" type="password" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="email">Email：</label>
+                                <div class="controls">
+                                    <input type="text" id="email" name="email" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label  class='control-label' for="deptId">部门：</label>
+                                <div class="controls">
+                                    <select name="deptId" id="deptId" class="input-xlarge">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label  class='control-label' for="position">职位：</label>
+                                <div class="controls">
+                                    <input type="text" name="position" id="position" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <!--<div class="form-actions">
+                                <button class="btn btn-primary" type="button" onclick="saveUser()">保存更改</button>
+                                <button class="btn">取消</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+<script>
+    function saveAccount(){
+        var account = $('#account').val();
+        var name = $('#name').val();
+        var passwd = $('#passwd').val();
+        var email = $('#email').val();
+        var position = $('#position').val();
+        var deptId = $('#deptId').val();
+        $.post('/account', {'account':account, 'username':name, 'passwd':passwd, 'email':email, 'deptId':deptId, 'position':position}, function(data){
+            if(data.msg){
+                alert(data.msg);
+            }
+            loadUrl('account/list');
+        }, 'json');
+    }
+    $.getJSON('/department/all', function(data){
+        var deptList = data.deptList;
+        deptList.forEach(function(dept){
+            var option = $('<option value="'+dept.id+'">'+dept.deptName+'</option>');
+            $('#deptId').append(option);
+        });
+    });
+</script>

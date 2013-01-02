@@ -1,0 +1,114 @@
+
+<ul class="breadcrumb">
+    <li><a href="#" onclick="loadUrl('/')">首页</a> <span class="divider">/</span></li>
+    <li class="active">客户列表</li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="btn-toolbar">
+            <button class="btn btn-primary" onclick="addCustomer()"><i class="icon-plus"></i> 添加客户</button>
+            <!--<button class="btn">导入</button>
+            <button class="btn">导出</button>
+            <div class="btn-group">
+            </div>-->
+        </div>
+        <div class="well">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>客户名</th>
+                    <th>法人代表</th>
+                    <!--<th>行业</th>-->
+                    <th>客户性质</th>
+                    <th>客户类型</th>
+                    <!--<th>客户来源</th>-->
+                    <!--<th>规模</th>-->
+                    <!--<th>资产</th>-->
+                    <!--<th>营业额</th>-->
+                    <th>客户状态</th>
+                    <th>联系电话</th>
+                    <th>电子信箱</th>
+                    <th>传真号码</th>
+                    <!--<th>地址</th>-->
+                    <th style="width: 26px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (var i=0;i<customerList.length;i++) {
+                      customer = customerList[i];
+                %>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><%= customer.customerName %></td>
+                    <td><%= customer.legalRepresentative %></td>
+                    <!--<td><%= customer.industryCN %></td>-->
+                    <td><%= customer.customerNatureCN %></td>
+                    <td><%= customer.customerTypeCN %></td>
+                    <!--<td><%= customer.sourceCN %></td>-->
+                    <!--<td><%= customer.scaleCN %></td>-->
+                    <!--<td><%= customer.assetsCN %></td>-->
+                    <!--<td><%= customer.turnoverCN %></td>-->
+                    <td><%= customer.customerStatusCN %></td>
+                    <td><%= customer.phoneNo %></td>
+                    <td><%= customer.email %></td>
+                    <td><%= customer.faxNo %></td>
+                    <!--<td><%= customer.address %></td>-->
+                    <td>
+                        <a href="#" onclick="loadUrl('/customer/edit/<%= customer.id %>')"><i class="icon-pencil"></i></a>
+                        <a href="#myModal" onclick="currentId='<%= customer.id %>'" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <ul>
+                <li><a href="#" onclick="loadUrl('/customer/list')"><<</a></li>
+                <% if(totalPages<=5){ %>
+                <% for (var i=1;i<=totalPages;i++){ %>
+                <li><a href="#"><%= i %></a></li>
+                <% } %>
+                <% }else{ %>
+                <li><a href="#"><%= pageNo-2 %></a></li>
+                <li><a href="#"><%= pageNo-1 %></a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#"><%= totalPages-1 %></a></li>
+                <li><a href="#"><%= totalPages %></a></li>
+                <% } %>
+                <li><a href="#" onclick="loadUrl('/customer/list/pageNo/<%= totalPages %>')"> >> </a></li>
+            </ul>
+        </div>
+
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">删除确认</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>您确定要删除吗?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="deleteCustomer()">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteCustomer(){
+        $.ajax({url:'/customer/', data:{'id':currentId}, type:'DELETE',success:function(data){
+            if(data.msg){
+                alert(data.msg);
+            }
+            refreshPage();
+        }});
+    }
+    function addCustomer(){
+        $('#rowContent').load('/customer/add');
+    }
+    var currentId = '';
+</script>

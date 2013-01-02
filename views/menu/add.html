@@ -1,0 +1,86 @@
+    <ul class="breadcrumb">
+        <li><a href="#" onclick="loadUrl('/')">主页</a> <span class="divider">/</span></li>
+        <li><a href="#" onclick="loadUrl('/menu/list')">菜单管理</a><span class="divider">/</span></li>
+        <% if(parent.id!==0){ %><li><a href="#" onclick="loadUrl('/menu/list/parentId/<%= parent.id %>')"><%= parent.menuName %></a> <span class="divider">/</span></li><% } %>
+        <li class="active">创建菜单</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" onclick="saveMenu()"><i class="icon-save"></i> 保存</button>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" class="form-horizontal">
+                            <input type="hidden" name="parentId" value="<%=: menuId %>" id="parentId"/>
+                            <div class="control-group">
+                                <label class='control-label' for="menuName">菜单名：</label>
+                                <div class="controls">
+                                    <input type="text" id="menuName" name="menuName" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="menuCode">编码：</label>
+                                <div class="controls">
+                                    <input type="text" id="menuCode" name="menuCode" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="url">URL：</label>
+                                <div class="controls">
+                                    <input type="text" id="url" name="url" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="level">层级：</label>
+                                <div class="controls">
+                                    <input type="text" id="level" name="level" value="<%= parent.level+1 %>" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="order">排序：</label>
+                                <div class="controls">
+                                    <input type="text" id="order" name="order" value="<%= parent.childSum %>" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="remark">备注：</label>
+                                <div class="controls">
+                                    <textarea name="remark" id="remark" type="text" value="" class="input-xlarge"></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label'>状态：</label>
+                                <div class="controls">
+                                    <input type="radio" name="status" id="usable" value="usable" checked>可用&nbsp;
+                                    <input type="radio" name="status" id="unusable" value="unusable">不可用
+                                </div>
+                            </div>
+                            <!--<div class="form-actions">
+                                <button class="btn btn-primary" type="button" onclick="saveUser()">保存更改</button>
+                                <button class="btn">取消</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+<script>
+    function saveMenu(){
+        var menuData = $('#tab').serialize();
+        $.post('/menu', menuData, function(data){
+            if(data.msg){
+                alert(data.msg);
+            }
+            loadUrl('/menu/list/parentId/<%= parent.id %>');
+        }, 'json');
+    }
+</script>

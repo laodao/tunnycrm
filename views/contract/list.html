@@ -1,0 +1,106 @@
+
+<ul class="breadcrumb">
+    <li><a href="#" onclick="loadUrl('/')">首页</a> <span class="divider">/</span></li>
+    <li class="active">合同列表</li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="btn-toolbar">
+            <button class="btn btn-primary" onclick="addContract()"><i class="icon-plus"></i> 添加合同</button>
+            <!--<button class="btn">导入</button>
+            <button class="btn">导出</button>
+            <div class="btn-group">
+            </div>-->
+        </div>
+        <div class="well">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>合同名</th>
+                    <th>合同号</th>
+                    <th>合同类型</th>
+                    <th>客户</th>
+                    <th>客户联系人</th>
+                    <th>销售人员</th>
+                    <th>合同签订日期</th>
+                    <th>合同生效日期</th>
+                    <th>合同金额</th>
+                    <th>合同成本</th>
+                    <th style="width: 26px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (var i=0;i<contractList.length;i++) {
+                      contract = contractList[i];
+                %>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><%= contract.title %></td>
+                    <td><%= contract.contractNo %></td>
+                    <td><%= contract.type %></td>
+                    <td><%= contract.customerName %></td>
+                    <td><%= contract.linkmanName %></td>
+                    <td><%= contract.salesman %></td>
+                    <td><%= contract.signedDate %></td>
+                    <td><%= contract.effectiveDate %></td>
+                    <td><%= contract.amount %></td>
+                    <td><%= contract.cost %></td>
+                    <td>
+                        <a href="#" onclick="loadUrl('/contract/edit/<%= contract.id %>')"><i class="icon-pencil"></i></a>
+                        <a href="#myModal" onclick="currentId='<%= contract.id %>'" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <ul>
+                <li><a href="#" onclick="loadUrl('/contract/list')"><<</a></li>
+                <% if(totalPages<=5){ %>
+                <% for (var i=1;i<=totalPages;i++){ %>
+                <li><a href="#"><%= i %></a></li>
+                <% } %>
+                <% }else{ %>
+                <li><a href="#"><%= pageNo-2 %></a></li>
+                <li><a href="#"><%= pageNo-1 %></a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#"><%= totalPages-1 %></a></li>
+                <li><a href="#"><%= totalPages %></a></li>
+                <% } %>
+                <li><a href="#" onclick="loadUrl('/contract/list/pageNo/<%= totalPages %>')"> >> </a></li>
+            </ul>
+        </div>
+
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">删除确认</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>您确定要删除吗?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="deleteContract()">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteContract(){
+        $.ajax({url:'/contract/', data:{'id':currentId}, type:'DELETE',success:function(data){
+            if(data.msg){
+                alert(data.msg);
+            }
+            refreshPage();
+        }});
+    }
+    function addContract(){
+        $('#rowContent').load('/contract/add');
+    }
+    var currentId = '';
+</script>

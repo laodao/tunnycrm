@@ -1,0 +1,119 @@
+<script>
+    var currentId = '';
+    function deleteLinkman(){
+        var id = currentId;
+        $.ajax({
+            url:'/linkman',
+            data:{'id':id},
+            //contentType:'application/x-www-form-urlencoded',
+            type:'DELETE',
+            success:function(data){
+                if(data.msg){
+                    alert(data.msg);
+                }
+                refreshPage();
+            }
+        });
+    }
+</script>
+
+<ul class="breadcrumb">
+    <li><a href="#" onclick="loadUrl('/')">首页</a> <span class="divider">/</span></li>
+    <li class="active">联系人管理</li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="btn-toolbar">
+            <!--客户名：<input type="text" id="customer" name="customer" value="" class="input-xlarge">-->
+            <!--<input type="hidden" id="customerId" name="customerId" value="">-->
+            <!--联系人名：-->
+            <button class="btn btn-primary" onclick="loadUrl('/linkman/add')"><i class="icon-plus"></i> 添加联系人</button>
+            <!--<button class="btn">导入</button>-->
+            <!--<button class="btn">导出</button>-->
+            <!--<div class="btn-group">-->
+            <!--</div>-->
+        </div>
+        <div class="well">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>职位</th>
+                    <th>部门</th>
+                    <th>联系电话</th>
+                    <th>传真号</th>
+                    <th>QQ</th>
+                    <th>Email</th>
+                    <th>MSN</th>
+                    <th>助手</th>
+                    <th>助手电话</th>
+                    <th>销售状态</th>
+                    <th>购买意向</th>
+                    <th style="width: 26px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (var i=0;i<linkmanList.length;i++) {
+                      linkman = linkmanList[i];
+                %>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><%= linkman.name %></td>
+                    <td><%= linkman.sex %></td>
+                    <td><%= linkman.position %></td>
+                    <td><%= linkman.department %></td>
+                    <td><%= linkman.phoneNo %></td>
+                    <td><%= linkman.faxNo %></td>
+                    <td><%= linkman.QQ %></td>
+                    <td><%= linkman.email %></td>
+                    <td><%= linkman.MSN %></td>
+                    <td><%= linkman.assistant %></td>
+                    <td><%= linkman.assistantPhoneNo %></td>
+                    <td><%= linkman.salesState %></td>
+                    <td><%= linkman.intention %></td>
+                    <td>
+                        <a href="#" onclick="loadUrl('/linkman/edit/<%= linkman.id %>')"><i class="icon-pencil"></i></a>
+                        <a href="#myModal" role="button" onclick="currentId='<%= linkman.id %>'" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <ul>
+                <li><a href="#" onclick="loadUrl('/linkman/list')"><<</a></li>
+                <% if(totalPages<=5){ %>
+                <% for (var i=1;i<=totalPages;i++){ %>
+                <li><a href="#" onclick="loadUrl('/linkman/list/pageNo/<%= i %>')"><%= i %></a></li>
+                <% } %>
+                <% }else{ %>
+                <li><a href="#" onclick="loadUrl('/linkman/list/pageNo/<%= pageNo-2 %>')"><%= pageNo-2 %></a></li>
+                <li><a href="#" onclick="loadUrl('/linkman/list/pageNo/<%= pageNo-1 %>')"><%= pageNo-1 %></a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#" onclick="loadUrl('/linkman/list/pageNo/<%= totalPages-1 %>')"><%= totalPages-1 %></a></li>
+                <li><a href="#" onclick="loadUrl('/linkman/list/pageNo/<%= totalPages %>')"><%= totalPages %></a></li>
+                <% } %>
+                <li><a href="#" onclick="loadUrl('/linkman/list/pageNo/<%= totalPages %>')"> >> </a></li>
+            </ul>
+        </div>
+
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">确认删除</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>您确定要删除吗?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="deleteLinkman()">删除</button>
+            </div>
+        </div>
+    </div>
+</div>

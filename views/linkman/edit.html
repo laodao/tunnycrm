@@ -1,0 +1,195 @@
+<ul class="breadcrumb">
+    <li><a href="#" onclick="loadUrl('/')">首页</a> <span class="divider">/</span></li>
+    <li><a href="#" onclick="loadUrl('/linkman/list')">联系人管理</a> <span class="divider">/</span></li>
+    <li class="active">添加联系人</li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="btn-toolbar">
+            <button class="btn btn-primary" onclick="saveLinkMan()"><i class="icon-save"></i> 保存</button>
+            <div class="btn-group">
+            </div>
+        </div>
+        <div class="well">
+            <!--<ul class="nav nav-tabs">-->
+            <!--<li class="active"><a href="#home" data-toggle="tab">Profile</a></li>-->
+            <!--<li><a href="#profile" data-toggle="tab">Password</a></li>-->
+            <!--</ul>-->
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="home">
+                    <form id="tab" class="form-horizontal">
+                        <input type="hidden" value="<%= linkman.id %>" name="id" id="id"/>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="name">姓名：</label>
+                            <div class="controls">
+                                <input type="text" id="name" name="name" value="<%= linkman.name %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="englishName">英文名：</label>
+                            <div class="controls">
+                                <input type="text" id="englishName" name="englishName" value="<%= linkman.englishName %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="sex">性别：</label>
+                            <div class="controls">
+                                <input name="sex" id="sex" type="text" value="<%= linkman.sex %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label  class='control-label' for="position">职位：</label>
+                            <div class="controls">
+                                <input type="text" name="position" id="position" value="<%= linkman.position %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="department">单位：</label>
+                            <div class="controls">
+                                <input type="hidden" id="customerId" name="customerId" value="<%= linkman.customerId %>" >
+                                <input type="text" id="customerName" name="customerName" value="<%= linkman.customerName %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="department">部门：</label>
+                            <div class="controls">
+                                <input type="text" id="department" name="department" value="<%= linkman.department %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="phoneNo">联系电话：</label>
+                            <div class="controls">
+                                <input name="phoneNo" id="phoneNo" type="text" value="<%= linkman.phoneNo %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="email">Email：</label>
+                            <div class="controls">
+                                <input type="text" id="email" name="email" value="<%= linkman.email %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="faxNo">传真号：</label>
+                            <div class="controls">
+                                <input type="text" id="faxNo" name="faxNo" value="<%= linkman.faxNo %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="assistant">助手：</label>
+                            <div class="controls">
+                                <input type="text" id="assistant" name="assistant" value="<%= linkman.assistant %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="assistantPhoneNo">助手电话：</label>
+                            <div class="controls">
+                                <input type="text" id="assistantPhoneNo" name="assistantPhoneNo" value="<%= linkman.assistantPhoneNo %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="QQ">QQ：</label>
+                            <div class="controls">
+                                <input type="text" id="QQ" name="QQ" value="<%= linkman.QQ %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="MSN">MSN：</label>
+                            <div class="controls">
+                                <input type="text" id="MSN" name="MSN" value="<%= linkman.MSN %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="Skype">Skype：</label>
+                            <div class="controls">
+                                <input type="text" id="Skype" name="Skype" value="<%= linkman.Skype %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="twitter">Twitter：</label>
+                            <div class="controls">
+                                <input type="text" id="twitter" name="twitter" value="<%= linkman.twitter %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="facebook">facebook：</label>
+                            <div class="controls">
+                                <input type="text" id="facebook" name="facebook" value="<%= linkman.facebook %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="MSN">Weibo：</label>
+                            <div class="controls">
+                                <input type="text" id="weibo" name="weibo" value="<%= linkman.weibo %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="birthday">生日：</label>
+                            <div class="controls">
+                                <input type="text" id="birthday" name="birthday" value="<%= linkman.birthday %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="address">地址：</label>
+                            <div class="controls">
+                                <input type="text" id="address" name="address" value="<%= linkman.address %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="salesState">销售状态：</label>
+                            <div class="controls">
+                                <input type="text" id="salesState" name="salesState" value="<%= linkman.salesState %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5 inline">
+                            <label class='control-label' for="intention">购买意向：</label>
+                            <div class="controls">
+                                <input type="text" id="intention" name="intention" value="<%= linkman.intention %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group span5" style="clear: both;;">
+                            <label class='control-label' for="remark">备注：</label>
+                            <div class="controls">
+                                <textarea type="text" id="remark" name="remark" class="span10" ><%= linkman.remark %></textarea>
+                            </div>
+                        </div>
+                        <!--<div class="form-actions">
+                            <button class="btn btn-primary" type="button" onclick="saveUser()">保存更改</button>
+                            <button class="btn">取消</button>
+                        </div>-->
+                    </form>
+                </div>
+            </div>
+            <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">确认删除</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p class="error-text"><i class="icon-warning-sign modal-icon"></i>您确定要删除吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                    <button class="btn btn-danger" data-dismiss="modal">删除</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function saveLinkMan(){
+        var linkmanData = $('#tab').serialize();
+        $.ajax({url:'/linkman',
+            data:linkmanData,
+            type:'PUT',
+            success:function(data){
+            if(data.msg){
+                alert(data.msg);
+            }
+            goback();
+        }, dataType:'json'});
+    }
+</script>

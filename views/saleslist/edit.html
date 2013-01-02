@@ -1,0 +1,188 @@
+
+<ul class="breadcrumb">
+    <li><a href="#" onclick="loadUrl('/')">主页</a> <span class="divider">/</span></li>
+    <li><a href="#" onclick="loadUrl('/customer/list')">客户列表</a> <span class="divider">/</span></li>
+    <li class="active">编辑客户</li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <!--<div class="btn-toolbar">
+            <button class="btn btn-primary" onclick="saveCustomer()"><i class="icon-save"></i> 保存</button>
+            <div class="btn-group">
+            </div>
+        </div>-->
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">客户基本信息</a></li>
+                <li><a href="#additional" data-toggle="tab">客户附加信息</a></li>
+                <li><a href="#financial" data-toggle="tab">客户财务信息</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="home">
+                    <form id="tab" class="form-horizontal">
+                        <input type="hidden" name="id" id="id" value="<%= customer.id %>"/>
+                        <div class="control-group">
+                            <label class='control-label' for="customerName">客户名：</label>
+                            <div class="controls">
+                                <input type="text" value="<%= customer.customerName %>" name="customerName" id="customerName" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="legalRepresentative">法人代表：</label>
+                            <div class="controls">
+                                <input type="text" value="<%= customer.legalRepresentative %>" name="legalRepresentative" id="legalRepresentative" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="industry">行业：</label>
+                            <div class="controls">
+                                <select value="<%= customer.industry %>" name="industry" id="industry" class="input-xlarge">
+                                    <% for(var i=0;i<dics['industry'].length;i++){ %>
+                                    <option value="<%= dics['industry'][i].code %>" <% if(customer.industry===dics['industry'][i].code){ %>selected<% } %> ><%= dics['industry'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="customerType">客户类型：</label>
+                            <div class="controls">
+                                <select name="customerType" value="<%= customer.customerType %>" id="customerType" class="input-xlarge">
+                                    <% for(var i=0;i<dics['customerType'].length;i++){ %>
+                                    <option value="<%= dics['customerType'][i].code %>" <% if(customer.customerType===dics['customerType'][i].code){ %>selected<% } %> ><%= dics['customerType'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="customerNature">客户性质：</label>
+                            <div class="controls">
+                                <select name="customerNature" value="<%= customer.customerNature %>" id="customerNature" class="input-xlarge">
+                                    <% for(var i=0;i<dics['customerNature'].length;i++){ %>
+                                    <option value="<%= dics['customerNature'][i].code %>" <% if(customer.customerNature===dics['customerNature'][i].code){ %>selected<% } %> ><%= dics['customerNature'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="scale">规模：</label>
+                            <div class="controls">
+                                <select name="scale" value="<%= customer.scale %>" id="scale" class="input-xlarge">
+                                    <% for(var i=0;i<dics['scale'].length;i++){ %>
+                                    <option value="<%= dics['scale'][i].code %>" <% if(customer.scale===dics['scale'][i].code){ %>selected<% } %> ><%= dics['scale'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="assets">资产：</label>
+                            <div class="controls">
+                                <select name="assets" value="<%= customer.assets %>" id="assets" class="input-xlarge">
+                                    <% for(var i=0;i<dics['assets'].length;i++){ %>
+                                    <option value="<%= dics['assets'][i].code %>" <% if(customer.assets===dics['assets'][i].code){ %>selected<% } %> ><%= dics['assets'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="turnover">营业额：</label>
+                            <div class="controls">
+                                <select name="turnover" value="<%= customer.turnover %>" id="turnover" class="input-xlarge">
+                                    <% for(var i=0;i<dics['turnover'].length;i++){ %>
+                                    <option value="<%= dics['turnover'][i].code %>" <% if(customer.turnover===dics['turnover'][i].code){ %>selected<% } %> ><%= dics['turnover'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="source">客户来源：</label>
+                            <div class="controls">
+                                <select name="source" id="source" class="input-xlarge">
+                                    <% for(var i=0;i<dics['source'].length;i++){ %>
+                                    <option value="<%= dics['source'][i].code %>" <% if(customer.source===dics['source'][i].code){ %>selected<% } %> ><%= dics['source'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="customerStatus">客户状态：</label>
+                            <div class="controls">
+                                <select name="customerStatus" value="<%= customer.customerStatus %>" id="customerStatus" class="input-xlarge">
+                                    <% for(var i=0;i<dics['customerStatus'].length;i++){ %>
+                                    <option value="<%= dics['customerStatus'][i].code %>" <% if(customer.customerStatus===dics['customerStatus'][i].code){ %>selected<% } %> ><%= dics['customerStatus'][i].dicName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="phoneNo">联系电话：</label>
+                            <div class="controls">
+                                <input type="text" id="phoneNo" name="phoneNo" value="<%= customer.phoneNo %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="email">电子信箱：</label>
+                            <div class="controls">
+                                <input type="text" id="email" name="email" value="<%= customer.email %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="faxNo">传真号码：</label>
+                            <div class="controls">
+                                <input type="text" id="faxNo" name="faxNo" value="<%= customer.faxNo %>" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class='control-label' for="address">地址：</label>
+                            <div class="controls">
+                                <input type="text" id="address" name="address" value="<%= customer.address %>" class="input-xlarge">
+                            </div>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary" onclick="updateCustomer()"><i class="icon-save"></i> 保存</button>
+                </div>
+                <div class="tab-pane fade" id="additional">
+                    <form id="tab2">
+                        <label>New Password</label>
+                        <input type="password" class="input-xlarge">
+                        <div>
+                            <button class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="financial">
+                    <form id="tab3">
+                        <label>New Password</label>
+                        <input type="password" class="input-xlarge">
+                        <div>
+                            <button class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function updateCustomer(){
+//            var account = $('#account').val();
+//            var name = $('#name').val();
+//            var passwd = $('#passwd').val();
+//            var email = $('#email').val();
+//            var position = $('#position').val();
+//            var deptId = $('#deptId').val();
+        var customerData = $('#tab').serialize();
+        $.ajax({url:'/customer',
+            data:customerData,
+            type:'PUT',
+            success:function(data){
+                if(data.msg){
+                    alert(data.msg);
+                }
+                goback();
+            },
+            dataType:'json'});
+    }
+</script>

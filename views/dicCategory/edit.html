@@ -1,0 +1,98 @@
+    <ul class="breadcrumb">
+        <li><a href="#" onclick="loadUrl('/')">主页</a> <span class="divider">/</span></li>
+        <li><a href="#" onclick="loadUrl('/dicCategory/list')">字典管理</a> <span class="divider">/</span></li>
+        <% if(category){ %><li><a href="#" onclick="loadUrl('/dic/list/categoryId/<%= category.id %>')"><%= category.categoryName %></a> <span class="divider">/</span></li><% } %>
+        <li class="active">修改字典</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" onclick="updateCategory('<%= dicCategory.id %>')"><i class="icon-save"></i> 保存</button>
+                <a href="#myModal" data-toggle="modal" class="btn">删除</a>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" class="form-horizontal">
+                            <input type="hidden" name="id" value="<%=: dicCategory.id %>" id="id"/>
+                            <input type="hidden" name="parentId" value="<%=: dicCategory.parentId %>" id="parentId"/>
+                            <div class="control-group">
+                                <label class='control-label' for="categoryName">分类名：</label>
+                                <div class="controls">
+                                    <input type="text" id="categoryName" name="categoryName" value="<%= dicCategory.categoryName %>" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="code">编码：</label>
+                                <div class="controls">
+                                    <input type="text" id="code" name="code" value="<%= dicCategory.code %>" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="remark">备注：</label>
+                                <div class="controls">
+                                    <textarea name="remark" id="remark" type="text" value="<%= dicCategory.remark %>" class="input-xlarge"><%= dicCategory.remark %></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label'>状态：</label>
+                                <div class="controls">
+                                    <input type="radio" name="status" id="usable" value="usable" <% if(dicCategory.status=='usable'){ %>checked<% } %> >可用&nbsp;
+                                    <input type="radio" name="status" id="unusable" value="unusable"<% if(dicCategory.status=='unusable'){ %>checked<% } %> >不可用
+                                </div>
+                            </div>
+                            <!--<div class="form-actions">
+                                <button class="btn btn-primary" type="button" onclick="saveUser()">保存更改</button>
+                                <button class="btn">取消</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">确认删除</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p class="error-text"><i class="icon-warning-sign modal-icon"></i>您确定要删除吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                    <button class="btn btn-danger" data-dismiss="modal">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function deleteCategory(){
+            var id = '<%=: dicCategory.id %>';
+            $.ajax({
+                url:'/dicCategory',
+                data:{'id':id},
+                //contentType:'application/x-www-form-urlencoded',
+                type:'DELETE',
+                success:function(data){
+                    if(data.msg){
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function updateCategory(id){
+            var categoryData = $('#tab').serialize();
+            $.ajax({url:'/dicCategory', data:categoryData,type:'PUT', success:function(data){
+                if(data.msg){
+                    alert(data.msg);
+                }
+                loadUrl('/dicCategory/list/categoryId/<%= parentId %>');
+            }, dataType:'json'});
+        }
+    </script>

@@ -1,0 +1,173 @@
+
+    <ul class="breadcrumb">
+        <li><a href="#" onclick="loadUrl('/')">主页</a> <span class="divider">/</span></li>
+        <li><a href="#" onclick="loadUrl('/customer/list')">客户列表</a> <span class="divider">/</span></li>
+        <li class="active">添加客户</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <!--<div class="btn-toolbar">
+                <button class="btn btn-primary" onclick="saveCustomer()"><i class="icon-save"></i> 保存</button>
+                <div class="btn-group">
+                </div>
+            </div>-->
+            <div class="well">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#home" data-toggle="tab">客户基本信息</a></li>
+                    <li><a href="#profile" data-toggle="tab">客户附加信息</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" class="form-horizontal">
+                            <div class="control-group">
+                                <label class='control-label' for="customerName">客户名：</label>
+                                <div class="controls">
+                                    <input type="text" value="" name="customerName" id="customerName" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="legalRepresentative">法人代表：</label>
+                                <div class="controls">
+                                    <input type="text" value="" name="legalRepresentative" id="legalRepresentative" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="industry">行业：</label>
+                                <div class="controls">
+                                    <select type="text" value="" name="industry" id="industry" class="input-xlarge">
+                                        <% for(var i=0;i<dics['industry'].length;i++){ %>
+                                        <option value="<%= dics['industry'][i].code %>"><%= dics['industry'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="customerType">客户类型：</label>
+                                <div class="controls">
+                                    <select name="customerType" id="customerType" class="input-xlarge">
+                                        <% for(var i=0;i<dics['customerType'].length;i++){ %>
+                                        <option value="<%= dics['customerType'][i].code %>"><%= dics['customerType'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="customerNature">客户性质：</label>
+                                <div class="controls">
+                                    <select name="customerNature" id="customerNature" class="input-xlarge">
+                                        <% for(var i=0;i<dics['customerNature'].length;i++){ %>
+                                        <option value="<%= dics['customerNature'][i].code %>"><%= dics['customerNature'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="scale">规模：</label>
+                                <div class="controls">
+                                    <select name="scale" id="scale" class="input-xlarge">
+                                        <% for(var i=0;i<dics['scale'].length;i++){ %>
+                                        <option value="<%= dics['scale'][i].code %>"><%= dics['scale'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="assets">资产：</label>
+                                <div class="controls">
+                                    <select name="assets" id="assets" class="input-xlarge">
+                                        <% for(var i=0;i<dics['assets'].length;i++){ %>
+                                        <option value="<%= dics['assets'][i].code %>"><%= dics['assets'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="turnover">营业额：</label>
+                                <div class="controls">
+                                    <select name="turnover" id="turnover" class="input-xlarge">
+                                        <% for(var i=0;i<dics['turnover'].length;i++){ %>
+                                        <option value="<%= dics['turnover'][i].code %>"><%= dics['turnover'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="source">客户来源：</label>
+                                <div class="controls">
+                                    <select name="source" id="source" class="input-xlarge">
+                                        <% for(var i=0;i<dics['source'].length;i++){ %>
+                                        <option value="<%= dics['source'][i].code %>"><%= dics['source'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="customerStatus">客户状态：</label>
+                                <div class="controls">
+                                    <select name="customerStatus" id="customerStatus" class="input-xlarge">
+                                        <% for(var i=0;i<dics['customerStatus'].length;i++){ %>
+                                        <option value="<%= dics['customerStatus'][i].code %>"><%= dics['customerStatus'][i].dicName %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="phoneNo">联系电话：</label>
+                                <div class="controls">
+                                    <input type="text" id="phoneNo" name="phoneNo" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="email">电子信箱：</label>
+                                <div class="controls">
+                                    <input type="text" id="email" name="email" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="faxNo">传真号码：</label>
+                                <div class="controls">
+                                    <input type="text" id="faxNo" name="faxNo" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class='control-label' for="address">地址：</label>
+                                <div class="controls">
+                                    <input type="text" id="address" name="address" value="" class="input-xlarge">
+                                </div>
+                            </div>
+                        </form>
+                        <button class="btn btn-primary" onclick="saveCustomer()"><i class="icon-save"></i> 保存</button>
+                    </div>
+                    <div class="tab-pane fade" id="profile">
+                        <form id="tab2">
+                            <label>New Password</label>
+                            <input type="password" class="input-xlarge">
+                            <div>
+                                <button class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function saveCustomer(){
+//            var account = $('#account').val();
+//            var name = $('#name').val();
+//            var passwd = $('#passwd').val();
+//            var email = $('#email').val();
+//            var position = $('#position').val();
+//            var deptId = $('#deptId').val();
+            var customerData = $('#tab').serialize();
+            $.post('/customer', customerData, function(data){
+                if(data.msg){
+                    alert(data.msg);
+                }
+                loadUrl('/customer/list');
+            }, 'json');
+        }
+    </script>
